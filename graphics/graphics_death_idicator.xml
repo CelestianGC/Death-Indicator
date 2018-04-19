@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<icon name="token_dead_load" file="graphics/token/rip_tombstone_small.png" />
+	<icon name="token_dead" file="graphics/token/rip_tombstone.png" />
+	<icon name="token_dead_pc" file="graphics/token/rip_tombstone_pc.png" />
+</root>
