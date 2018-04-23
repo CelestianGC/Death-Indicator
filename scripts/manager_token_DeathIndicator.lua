@@ -6,19 +6,24 @@ function onInit()
   
   CombatManager.addCombatantFieldChangeHandler("wounds", "onUpdate", updateHealth);
   CombatManager.addCombatantFieldChangeHandler("tokenrefid", "onUpdate", updateHealth);
-	--DB.addHandler("options.COMBAT_SHOW_RIP", "onUpdate", TokenManager.onOptionChanged);
-	--DB.addHandler("options.COMBAT_SHOW_RIP_DM", "onUpdate", TokenManager.onOptionChanged);  
+	DB.addHandler("options.COMBAT_SHOW_RIP", "onUpdate", TokenManager.onOptionChanged);
+	DB.addHandler("options.COMBAT_SHOW_RIP_DM", "onUpdate", TokenManager.onOptionChanged);
   
   -- for when options are toggled in settings.
 	DB.addHandler("options.COMBAT_SHOW_RIP", "onUpdate", updateCTEntries);
 	DB.addHandler("options.COMBAT_SHOW_RIP_DM", "onUpdate", updateCTEntries);  
-  -- for when FG starts.
+  Interface.onDesktopInit = onDesktopInit
+end
+
+-- we do this to delay it till things are loaded
+-- otherwise cold start map tokens come back nil
+function onDesktopInit()
   updateCTEntries();
 end
 
 function updateCTEntries()
 	for _,node in pairs(CombatManager.getCombatantNodes()) do
-		updateHealth(node.getChild("wounds"));
+  updateHealth(node.getChild("wounds"));
 	end
 end
 
