@@ -1,8 +1,8 @@
 function onInit()
 	OptionsManager.registerOption2("COMBAT_SHOW_RIP", false, "option_header_combat", "option_label_RIP", "option_entry_cycler", 
-			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
+			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "on" });
 	OptionsManager.registerOption2("COMBAT_SHOW_RIP_DM", false, "option_header_combat", "option_label_RIP_DM", "option_entry_cycler", 
-			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
+			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "on" });
   
   CombatManager.addCombatantFieldChangeHandler("wounds", "onUpdate", updateHealth);
   CombatManager.addCombatantFieldChangeHandler("tokenrefid", "onUpdate", updateHealth);
