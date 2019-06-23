@@ -4,7 +4,7 @@
 
 	<properties>
 		<name>CoreRPG - Death Indicator</name>
-		<version>1.7</version>
+		<version>1.8</version>
 		<loadorder>99</loadorder>
 		<description>
 			<text>Displays a image overlay when a token has 0 health.</text>
@@ -13,7 +13,7 @@
 		</description>
 	</properties>
 
-	<announcement text="Death Indicator Map Extension v1.7, CoreRPG+ version.\rFor Fantasy Grounds" font="emotefont" icon="token_dead_load" />
+	<announcement text="Death Indicator Map Extension v1.8, CoreRPG+ version.\rFor Fantasy Grounds" font="emotefont" icon="token_dead_load" />
 
 	<base>		
     <string name="option_label_RIP">RIP: Show on tokens to Players</string>

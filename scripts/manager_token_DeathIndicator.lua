@@ -27,34 +27,14 @@ function updateCTEntries()
 	end
 end
 
--- various updates thanks to suggestions from Andraax
+
+-- update tokens for health changes
 function updateHealth(nodeField)
-	local nodeCT = nodeField.getParent();
-	local tokenCT = CombatManager.getTokenFromCT(nodeCT);
+  local nodeCT = nodeField.getParent();
+  local tokenCT = CombatManager.getTokenFromCT(nodeCT);
   if (tokenCT) then
     -- Percent Damage, Status String, Wound Color
     local pDmg, pStatus, sColor = TokenManager2.getHealthInfo(nodeCT);
-    
-    -- new stuff, adds indicator for "DEAD" on the token. -celestian
-    local sDeathTokenName = "token_dead";
-    -- sDeathTokenName = sDeathTokenName .. tostring(math.random(5)); -- creates token_dead0,token_dead1,token_dead2,token_dead3,token_dead4,token_dead5 string
-    -- figure out if this is a pc token
-    local rActor = ActorManager.getActorFromCT(nodeCT);
-    local sActorType, nodeActor = ActorManager.getTypeAndNode(rActor);    
-    if sActorType == "pc" then
-      sDeathTokenName = "token_dead_pc";
-    end
-    
-    local widgetDeathIndicator = tokenCT.findWidget("deathindicator");
-    if not widgetDeathIndicator then
-      local nWidth, nHeight = tokenCT.getSize();
-      local sName = DB.getValue(nodeCT,"name","Unknown");
-      widgetDeathIndicator = tokenCT.addBitmapWidget(sDeathTokenName);
-      widgetDeathIndicator.setBitmap(sDeathTokenName);
-      widgetDeathIndicator.setName("deathindicator");
-      widgetDeathIndicator.setTooltipText(sName .. " has fallen, as if dead.");
-      widgetDeathIndicator.setSize(nWidth-20, nHeight-20);
-    end
     
     -- show rip on tokens
     local bOptionShowRIP = OptionsManager.isOption("COMBAT_SHOW_RIP", "on");
@@ -64,6 +44,33 @@ function updateHealth(nodeField)
     if User.isHost() then
       bPlayDead = ((pDmg >= 1) and (bOptionShowRIP_DM));
     end
-    widgetDeathIndicator.setVisible(bPlayDead);
+    local widgetDeathIndicator = tokenCT.findWidget("deathindicator");
+    if bPlayDead then
+      if not widgetDeathIndicator then
+        local nWidth, nHeight = tokenCT.getSize();
+        local nScale = tokenCT.getScale();
+        local sName = DB.getValue(nodeCT,"name","Unknown");
+        -- new stuff, adds indicator for "DEAD" on the token. -celestian
+        local sDeathTokenName = "token_dead";
+        -- sDeathTokenName = sDeathTokenName .. tostring(math.random(5)); -- creates token_dead0,token_dead1,token_dead2,token_dead3,token_dead4,token_dead5 string
+        -- figure out if this is a pc token
+        local rActor = ActorManager.getActorFromCT(nodeCT);
+        local sActorType, nodeActor = ActorManager.getTypeAndNode(rActor);    
+        if sActorType == "pc" then
+          sDeathTokenName = "token_dead_pc";
+        end
+        widgetDeathIndicator = tokenCT.addBitmapWidget(sDeathTokenName);
+        widgetDeathIndicator.setBitmap(sDeathTokenName);
+        widgetDeathIndicator.setName("deathindicator");
+        widgetDeathIndicator.setTooltipText(sName .. " has fallen, as if dead.");
+        widgetDeathIndicator.setSize(nWidth-20, nHeight-20);
+        --widgetDeathIndicator.setFrame(sDeathTokenName, 5, 5, 5, 5);
+      end
+      widgetDeathIndicator.setVisible(bPlayDead);
+    else
+      if widgetDeathIndicator then
+        widgetDeathIndicator.destroy();
+      end
+    end
   end
 end
